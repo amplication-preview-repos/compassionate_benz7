@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GameRoom {
+  betAmount Int?
+  createdAt DateTime            @default(now())
+  id        String              @id @default(cuid())
+  roomName  String?
+  status    EnumGameRoomStatus?
+  updatedAt DateTime            @updatedAt
+}
+
+model SymbolModel {
+  createdAt  DateTime @default(now())
+  id         String   @id @default(cuid())
+  symbolName String?
+  updatedAt  DateTime @updatedAt
+}
+
+model Bet {
+  amount    Int?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+enum EnumGameRoomStatus {
+  Option1
+}
